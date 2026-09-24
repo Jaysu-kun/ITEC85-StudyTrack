@@ -1,6 +1,25 @@
 import { format, isToday, isTomorrow, differenceInDays } from 'date-fns';
 
 /**
+ * Formats a Date or date string into 'yyyy-MM-ddTHH:mm' for datetime-local inputs.
+ * Defaults to today at 23:59 if no date is provided.
+ */
+export function formatLocalInputDateTime(dateVal?: string | Date): string {
+  if (!dateVal) {
+    const defaultTime = new Date();
+    defaultTime.setHours(23, 59, 0, 0);
+    return format(defaultTime, "yyyy-MM-dd'T'HH:mm");
+  }
+  const d = new Date(dateVal);
+  if (isNaN(d.getTime())) {
+    const defaultTime = new Date();
+    defaultTime.setHours(23, 59, 0, 0);
+    return format(defaultTime, "yyyy-MM-dd'T'HH:mm");
+  }
+  return format(d, "yyyy-MM-dd'T'HH:mm");
+}
+
+/**
  * Formats a Date or date string into 'yyyy-MM-dd' using the user's local timezone.
  * Avoids UTC date shifting issues with toISOString().split('T')[0].
  */
@@ -12,18 +31,21 @@ export function formatLocalInputDate(dateVal?: string | Date): string {
 }
 
 /**
- * Formats a deadline into a user-friendly relative or calendar string.
+ * Formats a deadline into a user-friendly relative or calendar string including time.
  */
 export function formatDeadline(dateStr: string | Date): string {
   const deadlineDate = new Date(dateStr);
   if (isNaN(deadlineDate.getTime())) return 'No due date';
-  if (isToday(deadlineDate)) return 'Today';
-  if (isTomorrow(deadlineDate)) return 'Tomorrow';
+  
+  const timeStr = format(deadlineDate, 'h:mm a');
+  if (isToday(deadlineDate)) return `Today, ${timeStr}`;
+  if (isTomorrow(deadlineDate)) return `Tomorrow, ${timeStr}`;
 
   const daysUntil = differenceInDays(deadlineDate, new Date());
-  if (daysUntil > 0 && daysUntil < 7) return `In ${daysUntil} days`;
-  if (daysUntil < 0) return `${Math.abs(daysUntil)} days overdue`;
-  return format(deadlineDate, 'MMM d, yyyy');
+  if (daysUntil > 0 && daysUntil < 7) {
+    return `${format(deadlineDate, 'EEE')}, ${timeStr}`;
+  }
+  return `${format(deadlineDate, 'MMM d, yyyy')}, ${timeStr}`;
 }
 
 /**
@@ -33,10 +55,7 @@ export function isTaskOverdue(dateStr: string | Date, completed = false): boolea
   if (completed) return false;
   const deadlineDate = new Date(dateStr);
   if (isNaN(deadlineDate.getTime())) return false;
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return deadlineDate < today;
+  return deadlineDate.getTime() < Date.now();
 }
 
 /**

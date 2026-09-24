@@ -128,25 +128,41 @@ export const Navbar: React.FC = () => {
           </NavbarItem>
         ) : (
           <div className="flex items-center gap-2">
-            <NavbarItem className="hidden sm:flex">
-              <RouterLink
-                to="/login"
-                className={`px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-colors ${
-                  isActive('/login')
-                    ? 'text-sky-600 dark:text-sky-400 font-bold'
-                    : 'text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400'
-                }`}
-              >
-                Log In
-              </RouterLink>
-            </NavbarItem>
-            <NavbarItem>
-              <RouterLink to="/signup">
-                <Button variant="gradient" size="sm">
-                  Sign Up
-                </Button>
-              </RouterLink>
-            </NavbarItem>
+            {location.pathname === '/signup' ? (
+              <NavbarItem>
+                <RouterLink to="/login">
+                  <Button variant="outline" size="sm">
+                    Log In
+                  </Button>
+                </RouterLink>
+              </NavbarItem>
+            ) : location.pathname === '/login' ? (
+              <NavbarItem>
+                <RouterLink to="/signup">
+                  <Button variant="gradient" size="sm">
+                    Sign Up
+                  </Button>
+                </RouterLink>
+              </NavbarItem>
+            ) : (
+              <>
+                <NavbarItem className="hidden sm:flex">
+                  <RouterLink
+                    to="/login"
+                    className="px-3.5 py-1.5 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
+                  >
+                    Log In
+                  </RouterLink>
+                </NavbarItem>
+                <NavbarItem>
+                  <RouterLink to="/signup">
+                    <Button variant="gradient" size="sm">
+                      Sign Up
+                    </Button>
+                  </RouterLink>
+                </NavbarItem>
+              </>
+            )}
           </div>
         )}
       </NavbarContent>

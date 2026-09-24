@@ -5,7 +5,7 @@ import Button from '../ui/Button';
 import useTaskStore from '../../store/useTaskStore';
 import useAuthStore from '../../store/useAuthStore';
 import useToast from '../../store/useToast';
-import { formatLocalInputDate } from '../../utils/date';
+import { formatLocalInputDateTime } from '../../utils/date';
 
 interface TaskFormProps {
   initialTask?: Task;
@@ -57,11 +57,11 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   const [description, setDescription] = useState(initialTask?.description || '');
   const [priority, setPriority] = useState<Priority>(initialTask?.priority || 'medium');
   const [deadline, setDeadline] = useState(
-    formatLocalInputDate(initialTask?.deadline)
+    formatLocalInputDateTime(initialTask?.deadline)
   );
-  const [subject, setSubject] = useState(initialTask?.subject || (categories[0]?.id || 'cat-general'));
+  const [subject, setSubject] = useState(initialTask?.subject || (categories[0]?.id || ''));
   const [newSubject, setNewSubject] = useState('');
-  const [showNewSubject, setShowNewSubject] = useState(false);
+  const [showNewSubject, setShowNewSubject] = useState(categories.length === 0 && !initialTask?.subject);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -145,7 +145,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
           <input
             id={titleId}
             type="text"
-            placeholder="e.g. Calculus problem set #4"
+            placeholder="Add a title for your task"
             required
             value={title}
             onChange={(e) => {
@@ -154,11 +154,10 @@ export const TaskForm: React.FC<TaskFormProps> = ({
             }}
             aria-invalid={Boolean(errors.title)}
             aria-describedby={errors.title ? `${titleId}-error` : undefined}
-            className={`w-full px-4 py-2.5 pr-10 border rounded-xl text-sm transition-all focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 ${
-              errors.title
+            className={`w-full px-4 py-2.5 pr-10 border rounded-xl text-sm transition-all focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 ${errors.title
                 ? 'border-rose-500 dark:border-rose-500 focus:ring-rose-500/25'
                 : 'border-slate-200 dark:border-slate-700/80'
-            }`}
+              }`}
           />
           <ListTodo size={18} className="absolute right-3.5 top-3 text-slate-400 dark:text-slate-500 pointer-events-none" />
         </div>
@@ -201,11 +200,10 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                     type="button"
                     onClick={() => setPriority(p)}
                     aria-pressed={isSelected}
-                    className={`flex-1 py-2 px-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 ${
-                      isSelected
+                    className={`flex-1 py-2 px-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 ${isSelected
                         ? priorityColors[p].active
                         : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
-                    }`}
+                      }`}
                   >
                     {priorityColors[p].label}
                   </button>
@@ -218,12 +216,12 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         {/* Deadline */}
         <div>
           <label htmlFor={deadlineId} className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-            Due date <span className="text-rose-500">*</span>
+            Due date & time <span className="text-rose-500">*</span>
           </label>
           <div className="relative">
             <input
               id={deadlineId}
-              type="date"
+              type="datetime-local"
               required
               value={deadline}
               onChange={(e) => {
@@ -232,16 +230,15 @@ export const TaskForm: React.FC<TaskFormProps> = ({
               }}
               aria-invalid={Boolean(errors.deadline)}
               aria-describedby={`${deadlineId}-help${errors.deadline ? ` ${deadlineId}-error` : ''}`}
-              className={`w-full px-4 py-2 border rounded-xl text-sm transition-all focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white ${
-                errors.deadline
+              className={`w-full px-4 py-2 border rounded-xl text-sm transition-all focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white ${errors.deadline
                   ? 'border-rose-500 dark:border-rose-500 focus:ring-rose-500/25'
                   : 'border-slate-200 dark:border-slate-700/80'
-              }`}
+                }`}
             />
             <Calendar size={18} className="absolute right-3.5 top-2.5 text-slate-400 dark:text-slate-500 pointer-events-none hidden sm:block" />
           </div>
           <p id={`${deadlineId}-help`} className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
-            Choose the date this task is due.
+            Choose the date and time this task is due.
           </p>
           {errors.deadline && (
             <p id={`${deadlineId}-error`} role="alert" className="flex items-center gap-1 text-xs text-rose-500 mt-1.5 font-medium">
@@ -269,21 +266,27 @@ export const TaskForm: React.FC<TaskFormProps> = ({
               }}
               aria-invalid={Boolean(errors.subject)}
               aria-describedby={errors.subject ? `${subjectId}-error` : undefined}
-              className={`flex-1 px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 ${
-                errors.subject
+              className={`flex-1 px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 ${errors.subject
                   ? 'border-rose-500 dark:border-rose-500 focus:ring-rose-500/25'
                   : 'border-slate-200 dark:border-slate-700/80'
-              }`}
+                }`}
             >
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
+              {categories.length === 0 ? (
+                <option value="" disabled>
+                  No subjects yet — click Add subject
                 </option>
-              ))}
+              ) : (
+                categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))
+              )}
             </select>
             <Button
               variant="outline"
               size="md"
+              type="button"
               onClick={() => setShowNewSubject(true)}
             >
               Add subject
@@ -303,19 +306,21 @@ export const TaskForm: React.FC<TaskFormProps> = ({
               }}
               aria-invalid={Boolean(errors.newSubject)}
               aria-describedby={errors.newSubject ? `${newSubjectId}-error` : undefined}
-              className={`flex-1 px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 ${
-                errors.newSubject
+              className={`flex-1 px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 ${errors.newSubject
                   ? 'border-rose-500 dark:border-rose-500 focus:ring-rose-500/25'
                   : 'border-slate-200 dark:border-slate-700/80'
-              }`}
+                }`}
             />
-            <Button
-              variant="secondary"
-              size="md"
-              onClick={() => setShowNewSubject(false)}
-            >
-              Cancel
-            </Button>
+            {categories.length > 0 && (
+              <Button
+                variant="secondary"
+                size="md"
+                type="button"
+                onClick={() => setShowNewSubject(false)}
+              >
+                Cancel
+              </Button>
+            )}
           </div>
         )}
 

@@ -55,7 +55,7 @@ async function connectToDatabase(customUri) {
     console.log('Attempting to connect to MongoDB...');
     await client.connect();
 
-    db = client.db();
+    db = client.db(config.dbName || undefined);
     console.log('Connected to MongoDB successfully. Using database:', db.databaseName);
     
     // Initialize indexes in the background

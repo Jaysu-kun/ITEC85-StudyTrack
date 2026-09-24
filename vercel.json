@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "installCommand": "npm install --prefix client --include=dev && npm install --prefix server",
+  "buildCommand": "npm run build --prefix client",
+  "outputDirectory": "client/dist",
+  "rewrites": [
+    { "source": "/auth/(.*)", "destination": "/api/index.js" },
+    { "source": "/auth", "destination": "/api/index.js" },
+    { "source": "/acadtasks/(.*)", "destination": "/api/index.js" },
+    { "source": "/acadtasks", "destination": "/api/index.js" },
+    { "source": "/test", "destination": "/api/index.js" },
+    { "source": "/health", "destination": "/api/index.js" },
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/((?!api/|auth/|acadtasks/|test|health|assets/|favicon.ico).*)", "destination": "/index.html" }
+  ]
+}

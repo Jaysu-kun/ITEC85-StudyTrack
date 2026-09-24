@@ -118,7 +118,7 @@ function makeRequest(server, options, body = null) {
       let data = '';
       res.on('data', chunk => { data += chunk; });
       res.on('end', () => {
-        let json = null;
+        let json;
         try {
           json = JSON.parse(data);
         } catch {

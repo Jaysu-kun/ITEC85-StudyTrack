@@ -11,9 +11,9 @@ const config = {
   port: parseInt(process.env.PORT, 10) || 3000,
   nodeEnv: process.env.NODE_ENV || 'development',
   mongodbUri: process.env.ATLAS_URI || process.env.MONGODB_URI || '',
-  jwtSecret: process.env.JWT_SECRET || 'studytrack_jwt_secret_key_2026',
+  jwtSecret: process.env.JWT_SECRET || (process.env.NODE_ENV === 'production' ? undefined : 'studytrack_jwt_secret_key_2026'),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
-  encryptionKey: process.env.ENCRYPTION_KEY || 'studytrack_secret_key_32_bytes_!',
+  encryptionKey: process.env.ENCRYPTION_KEY || (process.env.NODE_ENV === 'production' ? undefined : 'studytrack_secret_key_32_bytes_!'),
   corsOrigin: process.env.CORS_ORIGIN || '',
   allowedOrigins: (process.env.CORS_ORIGIN && process.env.CORS_ORIGIN !== '*')
     ? process.env.CORS_ORIGIN.split(',').map(o => o.trim()).filter(Boolean)

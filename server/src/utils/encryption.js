@@ -113,7 +113,7 @@ function decrypt(text) {
     }
     
     return text;
-  } catch (err) {
+  } catch {
     // Decryption failure (e.g. invalid key, authentication tag mismatch, or corrupted payload) fails safely
     return text;
   }

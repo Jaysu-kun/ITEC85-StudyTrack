@@ -4,7 +4,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "node tests/security.test.js",
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "lint": "eslint ."
   },
   "keywords": [
     "studytrack",
@@ -22,7 +23,11 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.16.0",
+    "mongodb": "^6.16.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.11.0",
     "nodemon": "^3.1.10"
   }
 }

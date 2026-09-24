@@ -1,48 +1,113 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  :root {
-    --color-bg-base: 248, 250, 252; /* slate-50 #f8fafc */
-    --color-surface: 255, 255, 255;
-    --color-surface-subtle: 241, 245, 249;
-    --color-border: 226, 232, 240;
-    --color-border-subtle: 241, 245, 249;
-    --color-text-primary: 15, 23, 42; /* slate-900 */
-    --color-text-secondary: 71, 85, 105; /* slate-600 */
-    --color-text-muted: 148, 163, 184; /* slate-400 */
-  }
+@plugin "./hero.ts";
 
-  .dark {
-    --color-bg-base: 9, 13, 22; /* #090d16 */
-    --color-surface: 15, 23, 42; /* slate-900 #0f172a */
-    --color-surface-subtle: 30, 41, 59; /* slate-800 */
-    --color-border: 30, 41, 59; /* slate-800 */
-    --color-border-subtle: 51, 65, 85;
-    --color-text-primary: 248, 250, 252; /* slate-50 */
-    --color-text-secondary: 148, 163, 184; /* slate-400 */
-    --color-text-muted: 100, 116, 139; /* slate-500 */
-  }
+@source "../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+@source "../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
 
-  html {
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+@custom-variant dark (&:is(.dark *));
 
-  body {
-    background-color: rgb(var(--color-bg-base));
-    color: rgb(var(--color-text-primary));
-    min-height: 100vh;
-    overflow-x: hidden;
-    transition: background-color 0.25s ease, color 0.25s ease;
-  }
+@theme {
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
 
-  html.dark {
-    background-color: #090d16;
-  }
+  --color-accent-50: #f5f3ff;
+  --color-accent-100: #ede9fe;
+  --color-accent-200: #ddd6fe;
+  --color-accent-300: #c4b5fd;
+  --color-accent-400: #a78bfa;
+  --color-accent-500: #8b5cf6;
+  --color-accent-600: #7c3aed;
+  --color-accent-700: #6d28d9;
+  --color-accent-800: #5b21b6;
+  --color-accent-900: #4c1d95;
+
+  --color-lightBg: #F8FAFC;
+  --color-light-bg: #F8FAFC;
+  --color-darkBg: #090D16;
+  --color-dark-bg: #090D16;
+  --color-circle1: #38BDF8;
+  --color-circle2: #027BF9;
+  --color-surface-light: #FFFFFF;
+  --color-surface-dark: #0F172A;
+  --color-surface-subtleLight: #F1F5F9;
+  --color-surface-subtleDark: #1E293B;
+  --color-surface-subtle-light: #F1F5F9;
+  --color-surface-subtle-dark: #1E293B;
+
+  --animate-moveCircle1: moveCircle1 20s ease-in-out infinite;
+  --animate-moveCircle2: moveCircle2 25s ease-in-out infinite;
+  --animate-moveCircle3: moveCircle3 22s ease-in-out infinite;
+  --animate-pulseGlow: pulseGlow 8s ease-in-out infinite;
+}
+
+@keyframes moveCircle1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(30px, 20px) scale(1.08); }
+}
+
+@keyframes moveCircle2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-25px, -15px) scale(1.05); }
+}
+
+@keyframes moveCircle3 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(15px, -25px) scale(0.95); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+:root {
+  --color-bg-base: 248, 250, 252; /* slate-50 #f8fafc */
+  --color-surface: 255, 255, 255;
+  --color-surface-subtle: 241, 245, 249;
+  --color-border: 226, 232, 240;
+  --color-border-subtle: 241, 245, 249;
+  --color-text-primary: 15, 23, 42; /* slate-900 */
+  --color-text-secondary: 71, 85, 105; /* slate-600 */
+  --color-text-muted: 148, 163, 184; /* slate-400 */
+}
+
+.dark {
+  --color-bg-base: 9, 13, 22; /* #090d16 */
+  --color-surface: 15, 23, 42; /* slate-900 #0f172a */
+  --color-surface-subtle: 30, 41, 59; /* slate-800 */
+  --color-border: 30, 41, 59; /* slate-800 */
+  --color-border-subtle: 51, 65, 85;
+  --color-text-primary: 248, 250, 252; /* slate-50 */
+  --color-text-secondary: 148, 163, 184; /* slate-400 */
+  --color-text-muted: 100, 116, 139; /* slate-500 */
+}
+
+html {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: rgb(var(--color-bg-base));
+  color: rgb(var(--color-text-primary));
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+html.dark {
+  background-color: #090d16;
 }
 
 /* Background Micro-Grid Pattern */

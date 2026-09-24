@@ -1,17 +1,17 @@
 import React from 'react';
 import Logo from '../../assets/images/StudyTrack_Logo.png';
-import { Github, Twitter } from 'lucide-react';
+import { Code, MessageCircle } from 'lucide-react';
 
 const socialLinks = [
   {
     name: 'GitHub',
     href: 'https://github.com/',
-    icon: <Github className="w-4 h-4" />,
+    icon: <Code className="w-4 h-4" />,
   },
   {
     name: 'Twitter',
     href: 'https://twitter.com/',
-    icon: <Twitter className="w-4 h-4" />,
+    icon: <MessageCircle className="w-4 h-4" />,
   },
 ];
 

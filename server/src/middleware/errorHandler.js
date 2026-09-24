@@ -1,7 +1,6 @@
 // server/src/middleware/errorHandler.js
 const config = require('../config/env');
-const ApiError = require('../utils/ApiError');
-
+// const ApiError = require('../utils/ApiError'); // Unused
 /**
  * Centralized Express Error Handling Middleware
  */

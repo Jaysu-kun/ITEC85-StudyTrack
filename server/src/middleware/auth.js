@@ -25,7 +25,7 @@ function authenticateToken(req, res, next) {
     }
     req.user = decoded; // Contains userId, email
     next();
-  } catch (err) {
+  } catch {
     return next(ApiError.unauthorized('Invalid or expired authentication token.'));
   }
 }

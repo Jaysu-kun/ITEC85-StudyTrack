@@ -12,8 +12,9 @@ const authLimiter = createRateLimiter({
   message: 'Too many authentication attempts. Please try again later.'
 });
 
-// User Registration
+// User Registration (supports both /signup and /register)
 router.post('/signup', authLimiter, authController.signup);
+router.post('/register', authLimiter, authController.signup);
 
 // User Login
 router.post('/login', authLimiter, authController.login);

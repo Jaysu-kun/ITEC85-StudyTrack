@@ -224,6 +224,15 @@ async function runSecurityTests() {
     });
     assert(invalidEmailRes.status === 400, 'Registration with invalid email format returns 400 Bad Request');
 
+    // Test 1.4: /auth/register route alias works identically to /auth/signup
+    const registerAliasRes = await makeRequest(server, { method: 'POST', path: '/auth/register' }, {
+      name: 'Register Alias User',
+      email: 'alias@example.com',
+      password: 'AliasPassword123!'
+    });
+    assert(registerAliasRes.status === 201, '/auth/register endpoint alias returns 201 Created');
+    assert(registerAliasRes.body.token && typeof registerAliasRes.body.token === 'string', '/auth/register returns a valid JWT token');
+
     // Register User B for authorization / IDOR testing
     const signupResB = await makeRequest(server, { method: 'POST', path: '/auth/signup' }, {
       name: 'User B',

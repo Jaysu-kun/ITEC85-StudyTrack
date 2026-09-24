@@ -37,7 +37,7 @@ Create local environment files from `.env.example` without committing secret val
 
 | Variable | Purpose |
 |---|---|
-| `VITE_API_URL` | API base URL; otherwise `http://localhost:3000` |
+| `VITE_API_URL` | API base URL; in production defaults to same-origin relative calls (`''`) or explicit backend URL, in dev defaults to `http://localhost:3000` |
 | `VITE_OPENWEATHER_KEY` | Browser weather API key |
 
 Do not copy real credentials into documentation, source, or committed config files. The current server config loader also reads `server/config.env`; secure deployments should inject environment variables instead.

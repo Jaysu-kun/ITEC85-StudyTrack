@@ -25,7 +25,7 @@
 
 ## API communication
 
-`services/api.ts` creates an Axios client with a ten-second timeout, JSON headers, and `VITE_API_URL`/localhost fallback. A request interceptor attaches the JWT. A response interceptor logs a warning for 401 responses but does not automatically log the user out. `authService.ts` and `taskService.ts` provide typed endpoint wrappers.
+`services/api.ts` creates an Axios client with a ten-second timeout, JSON headers, `withCredentials: true`, and environment-aware baseURL (`VITE_API_URL` in production or same-origin relative paths, `http://localhost:3000` in dev). A request interceptor attaches the JWT. A response interceptor logs a warning for 401 responses but does not automatically log the user out. `authService.ts` and `taskService.ts` provide typed endpoint wrappers.
 
 ## Component relationships
 

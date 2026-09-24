@@ -28,7 +28,10 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    const isAllowed = config.allowedOrigins.includes(origin) || config.corsOrigin === '*';
+    const isAllowed =
+      config.corsOrigin === '*' ||
+      config.allowedOrigins.includes(origin) ||
+      /^https:\/\/[a-zA-Z0-9_-]+\.vercel\.app$/.test(origin);
     if (isAllowed) {
       return callback(null, true);
     }

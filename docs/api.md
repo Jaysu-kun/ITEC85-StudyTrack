@@ -2,7 +2,7 @@
 
 ## Common behavior
 
-- Base URL: the client default is `http://localhost:3000`; production uses `VITE_API_URL`.
+- Base URL: in local development defaults to `http://localhost:3000`; production uses `VITE_API_URL` or relative same-origin paths.
 - JSON is accepted and limited to 100 KB.
 - Protected calls use `Authorization: Bearer <JWT>`; legacy `x-auth-token` is also accepted by middleware.
 - Success and error responses are JSON.

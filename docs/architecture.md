@@ -2,7 +2,7 @@
 
 ## Overall architecture
 
-The application is a browser client and a separate Express API backed by MongoDB. The client calls the API directly using the configured `VITE_API_URL` (default `http://localhost:3000`). The Vite `/api` proxy is configured but the current service calls do not use the `/api` prefix.
+The application is a browser client and Express API backed by MongoDB. The client calls the API using the configured `VITE_API_URL` (in production defaults to same-origin relative endpoints on Vercel; in local development defaults to `http://localhost:3000`).
 
 ```mermaid
 flowchart LR

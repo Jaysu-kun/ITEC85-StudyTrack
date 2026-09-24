@@ -22,4 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Environment variables & secrets
 .env
+.env.*
+!.env.example
+config.env
+*.local

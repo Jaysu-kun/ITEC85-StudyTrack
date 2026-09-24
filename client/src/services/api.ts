@@ -1,7 +1,21 @@
 import axios, { AxiosError } from 'axios';
 import { getAuthToken } from '../store/useAuthStore';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+/**
+ * Determine API Base URL in an environment-aware manner:
+ * - When VITE_API_URL is explicitly provided, use it (e.g., https://isko-tasks.vercel.app).
+ * - In local development (DEV mode), fallback to http://localhost:3000.
+ * - In production builds, default to '' (empty string for same-origin relative requests).
+ */
+const getBaseApiUrl = (): string => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (typeof envUrl === 'string' && envUrl.trim() !== '') {
+    return envUrl.trim().replace(/\/+$/, '');
+  }
+  return import.meta.env.DEV ? 'http://localhost:3000' : '';
+};
+
+const API_URL = getBaseApiUrl();
 
 // Create configured axios instance
 export const api = axios.create({
@@ -10,6 +24,7 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
   timeout: 10000,
+  withCredentials: true,
 });
 
 // Request interceptor to attach JWT token

@@ -545,7 +545,17 @@ async function runSecurityTests() {
     assert(legacyPayload.split(':').length === 2, 'Legacy payload has 2 parts (IV:CIPHERTEXT)');
     assert(decrypt(legacyPayload) === 'Legacy CBC Data', 'Decrypt module successfully handles legacy AES-256-CBC payloads for backward compatibility');
 
-    // Test 6.5: Database storage verification of GCM ciphertext
+    // Test 6.5: Multi-key fallback handles legacy encryption keys smoothly
+    const legacyKeyBuf = Buffer.from('studytrack_secret_key_32_bytes_!');
+    const legacyGcmIv = crypto.randomBytes(12);
+    const legacyGcmCipher = crypto.createCipheriv('aes-256-gcm', legacyKeyBuf, legacyGcmIv);
+    let legacyGcmEnc = legacyGcmCipher.update('Secret data from older deployment', 'utf8');
+    legacyGcmEnc = Buffer.concat([legacyGcmEnc, legacyGcmCipher.final()]);
+    const legacyGcmTag = legacyGcmCipher.getAuthTag();
+    const legacyGcmPayload = `${legacyGcmIv.toString('hex')}:${legacyGcmEnc.toString('hex')}:${legacyGcmTag.toString('hex')}`;
+    assert(decrypt(legacyGcmPayload) === 'Secret data from older deployment', 'Candidate key fallback seamlessly decrypts tasks from legacy keys');
+
+    // Test 6.6: Database storage verification of GCM ciphertext
     const taskInDb = await mockDb.collection('AcadTasks').findOne({ _id: new ObjectId(taskBId) });
     assert(taskInDb.title.split(':').length === 3, 'Task title stored in MongoDB uses 3-part AES-256-GCM authenticated format');
     assert(taskInDb.title !== 'User B Secret Task', 'Plaintext title is NOT stored in MongoDB');

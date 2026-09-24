@@ -3,13 +3,7 @@ import { persist } from 'zustand/middleware';
 import { Task, Category, Priority } from '../types';
 import taskService from '../services/taskService';
 
-const DEFAULT_CATEGORIES: Category[] = [
-  { id: 'cat-general', name: 'General', color: '#3B82F6' },
-  { id: 'cat-major', name: 'Major Subjects', color: '#8B5CF6' },
-  { id: 'cat-gened', name: 'General Education', color: '#10B981' },
-  { id: 'cat-lab', name: 'Lab & Projects', color: '#F59E0B' },
-  { id: 'cat-exams', name: 'Exams & Quizzes', color: '#EF4444' },
-];
+const DEFAULT_CATEGORIES: Category[] = [];
 
 interface TaskState {
   tasks: Task[];
@@ -30,6 +24,8 @@ interface TaskState {
 }
 
 const generateId = () => Math.random().toString(36).substring(2, 15);
+
+const LEGACY_DEFAULT_IDS = new Set(['cat-general', 'cat-major', 'cat-gened', 'cat-lab', 'cat-exams']);
 
 export const useTaskStore = create<TaskState>()(
   persist(
@@ -222,11 +218,9 @@ export const useTaskStore = create<TaskState>()(
         return {
           ...currentState,
           ...persisted,
-          // Ensure default categories exist if persisted category array is empty
-          categories:
-            persisted?.categories && persisted.categories.length > 0
-              ? persisted.categories
-              : DEFAULT_CATEGORIES,
+          categories: Array.isArray(persisted?.categories)
+            ? persisted.categories.filter((cat) => !LEGACY_DEFAULT_IDS.has(cat.id))
+            : [],
         };
       },
     }

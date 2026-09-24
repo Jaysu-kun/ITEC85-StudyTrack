@@ -1,5 +1,5 @@
 import React, { useEffect, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import ThemeProvider from './components/ThemeProvider';
 import ToastContainer from './components/ui/ToastContainer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -17,8 +17,63 @@ const SignupPage = lazy(() => import('./pages/SignupPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
+const AppContent: React.FC = () => {
+  const { isAuthenticated } = useAuthStore();
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
+
+  return (
+    <div className="relative min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 transition-colors duration-250 selection:bg-sky-500/20 selection:text-sky-600 dark:selection:text-sky-300">
+      <AmbientBackground />
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <ToastContainer />
+        <Navbar />
+
+        <main className="flex-grow">
+          <Suspense fallback={<PageLoadingFallback />}>
+            <Routes>
+              {/* Protected Routes */}
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <HomePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Public Auth Routes */}
+              <Route
+                path="/login"
+                element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />}
+              />
+              <Route
+                path="/signup"
+                element={isAuthenticated ? <Navigate to="/" replace /> : <SignupPage />}
+              />
+
+              {/* Catch-all 404 */}
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </main>
+
+        {!isAuthPage && <Footer />}
+      </div>
+    </div>
+  );
+};
+
 export const App: React.FC = () => {
-  const { user, isAuthenticated } = useAuthStore();
+  const { user } = useAuthStore();
   const { fetchTasks } = useTaskStore();
 
   // Fetch tasks when user is logged in
@@ -31,52 +86,7 @@ export const App: React.FC = () => {
   return (
     <ThemeProvider>
       <Router>
-        <div className="relative min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 transition-colors duration-250 selection:bg-sky-500/20 selection:text-sky-600 dark:selection:text-sky-300">
-          <AmbientBackground />
-          <div className="relative z-10 flex flex-col min-h-screen">
-            <ToastContainer />
-            <Navbar />
-
-            <main className="flex-grow">
-              <Suspense fallback={<PageLoadingFallback />}>
-                <Routes>
-                  {/* Protected Routes */}
-                  <Route
-                    path="/"
-                    element={
-                      <ProtectedRoute>
-                        <HomePage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/profile"
-                    element={
-                      <ProtectedRoute>
-                        <ProfilePage />
-                      </ProtectedRoute>
-                    }
-                  />
-
-                  {/* Public Auth Routes */}
-                  <Route
-                    path="/login"
-                    element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />}
-                  />
-                  <Route
-                    path="/signup"
-                    element={isAuthenticated ? <Navigate to="/" replace /> : <SignupPage />}
-                  />
-
-                  {/* Catch-all 404 */}
-                  <Route path="*" element={<NotFoundPage />} />
-                </Routes>
-              </Suspense>
-            </main>
-
-            <Footer />
-          </div>
-        </div>
+        <AppContent />
       </Router>
     </ThemeProvider>
   );

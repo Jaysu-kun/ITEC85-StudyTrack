@@ -148,7 +148,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
               {isDueSoon && !task.completed && (
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700/60 animate-pulse">
                   <BellRing size={12} className="text-amber-600 dark:text-amber-400" />
-                  <span>Due &lt; 24h ({remainingTime})</span>
+                  <span>{remainingTime}</span>
                 </span>
               )}
             </div>

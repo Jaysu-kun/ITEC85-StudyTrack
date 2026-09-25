@@ -59,7 +59,7 @@ export const ToastContainer: React.FC = () => {
     <div
       aria-live="polite"
       aria-atomic="true"
-      className="fixed top-20 right-4 sm:right-6 z-[99999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-none"
+      className="fixed top-16 sm:top-20 left-3 right-3 sm:left-auto sm:right-6 z-[99999] flex flex-col gap-2.5 sm:max-w-sm w-auto pointer-events-none"
     >
       <AnimatePresence>
         {toasts.map((toast) => {
@@ -71,16 +71,16 @@ export const ToastContainer: React.FC = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -15, scale: 0.95 }}
               transition={{ duration: 0.22 }}
-              className={`pointer-events-auto flex items-center justify-between gap-3 p-4 rounded-2xl border shadow-xl backdrop-blur-xl ${style.bg} ${style.border} ${style.text}`}
+              className={`pointer-events-auto flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl border shadow-xl backdrop-blur-xl ${style.bg} ${style.border} ${style.text}`}
               role="alert"
             >
-              <div className="flex items-center gap-3 overflow-hidden">
+              <div className="flex items-center gap-2.5 sm:gap-3 overflow-hidden min-w-0">
                 {style.icon}
-                <p className="text-sm font-medium leading-snug break-words">{toast.message}</p>
+                <p className="text-xs sm:text-sm font-medium leading-snug break-words">{toast.message}</p>
               </div>
               <button
                 onClick={() => removeToast(toast.id)}
-                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex-shrink-0 cursor-pointer"
                 aria-label="Close notification"
               >
                 <X size={16} />

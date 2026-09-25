@@ -15,18 +15,18 @@ export const HeroMascot: React.FC<HeroMascotProps> = ({
 
   // Size mapping
   const sizeClasses = {
-    sm: 'w-36 h-36',
-    md: 'w-48 h-48',
-    lg: 'w-64 h-64',
-    responsive: 'w-44 h-44 sm:w-52 sm:h-52 md:w-60 md:h-60 lg:w-64 lg:h-64',
+    sm: 'w-32 h-32 sm:w-36 sm:h-36',
+    md: 'w-40 h-40 sm:w-48 sm:h-48',
+    lg: 'w-48 h-48 sm:w-64 sm:h-64',
+    responsive: 'w-32 h-32 xs:w-40 xs:h-40 sm:w-52 sm:h-52 md:w-60 md:h-60 lg:w-64 lg:h-64',
   }[size];
 
   // Ground shadow size mapping
   const shadowSizeClasses = {
-    sm: 'w-24 h-4',
-    md: 'w-32 h-5',
-    lg: 'w-40 h-6',
-    responsive: 'w-28 sm:w-36 md:w-44 h-4 sm:h-5 md:h-5.5',
+    sm: 'w-20 sm:w-24 h-3.5 sm:h-4',
+    md: 'w-28 sm:w-32 h-4 sm:h-5',
+    lg: 'w-36 sm:w-40 h-5 sm:h-6',
+    responsive: 'w-20 xs:w-28 sm:w-36 md:w-44 h-3 sm:h-4.5 md:h-5.5',
   }[size];
 
   // If reduced motion is preferred, render clean static presentation

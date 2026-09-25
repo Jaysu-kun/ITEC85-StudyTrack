@@ -51,9 +51,9 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const sizeClasses: Record<ButtonSize, string> = {
-    sm: 'text-xs px-3 py-1.5 gap-1.5 rounded-lg',
-    md: 'text-sm px-4 py-2 gap-2 rounded-xl',
-    lg: 'text-base px-6 py-2.5 gap-2.5 rounded-xl',
+    sm: 'text-xs px-2.5 sm:px-3 py-1.5 gap-1.5 rounded-lg min-h-[36px]',
+    md: 'text-xs sm:text-sm px-3.5 sm:px-4 py-2 gap-2 rounded-xl min-h-[40px] sm:min-h-[42px]',
+    lg: 'text-sm sm:text-base px-5 sm:px-6 py-2.5 sm:py-3 gap-2.5 rounded-xl min-h-[46px] sm:min-h-[48px]',
   };
 
   const widthClass = fullWidth ? 'w-full' : '';

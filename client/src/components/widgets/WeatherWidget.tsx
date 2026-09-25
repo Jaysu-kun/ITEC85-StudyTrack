@@ -118,69 +118,69 @@ export const WeatherWidget: React.FC = () => {
   const iconUrl = `https://openweathermap.org/img/wn/${weatherInfo.icon}@2x.png`;
 
   return (
-    <div className="p-5 flex flex-col gap-3">
-      <div className="flex items-center justify-between">
-        <div>
+    <div className="p-4 sm:p-5 flex flex-col gap-2.5 sm:gap-3">
+      <div className="flex items-center justify-between gap-2">
+        <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5 mb-0.5">
             {isUsingUserLocation ? (
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-                <Navigation size={11} className="fill-teal-600/20" />
+              <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 truncate">
+                <Navigation size={11} className="fill-teal-600/20 flex-shrink-0" />
                 Local Weather
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-sky-700 dark:text-sky-400">
-                <MapPin size={11} />
+              <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-sky-700 dark:text-sky-400 truncate">
+                <MapPin size={11} className="flex-shrink-0" />
                 Campus Weather
               </span>
             )}
           </div>
-          <h4 className="text-base font-extrabold text-slate-900 dark:text-white leading-tight">
+          <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-tight truncate">
             {name || (isUsingUserLocation ? 'Current Location' : 'CvSU Main')}
           </h4>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 flex-shrink-0">
           <button
             onClick={detectLocationAndFetch}
             disabled={isLocating}
             title={isUsingUserLocation ? 'Refresh local weather' : 'Detect your current location'}
             aria-label="Refresh location and weather"
-            className="p-1.5 text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors focus:outline-none"
+            className="p-1.5 text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors focus:outline-none cursor-pointer"
           >
             <RefreshCw size={14} className={isLocating ? 'animate-spin text-sky-500' : ''} />
           </button>
           <img
             src={iconUrl}
             alt={weatherInfo.description}
-            className="w-12 h-12 object-contain drop-shadow-sm"
+            className="w-10 h-10 sm:w-12 sm:h-12 object-contain drop-shadow-xs flex-shrink-0"
           />
         </div>
       </div>
 
-      <div className="flex items-baseline justify-between border-t border-b border-slate-100 dark:border-slate-800/80 py-2.5">
-        <span className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+      <div className="flex flex-wrap items-baseline justify-between border-t border-b border-slate-100 dark:border-slate-800/80 py-2 sm:py-2.5 gap-1">
+        <span className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
           {Math.round(main.temp)}°C
         </span>
-        <span className="text-xs text-slate-500 dark:text-slate-400 capitalize font-medium">
+        <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 capitalize font-medium truncate">
           {weatherInfo.description} (Feels {Math.round(main.feels_like)}°C)
         </span>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 text-center text-xs text-slate-600 dark:text-slate-400 pt-1">
-        <div className="flex flex-col items-center p-1.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-800/60">
-          <Droplets size={14} className="text-sky-500 mb-0.5" />
-          <span className="text-[10px] text-slate-400 font-medium">Humidity</span>
-          <span className="font-bold text-slate-800 dark:text-slate-200">{main.humidity}%</span>
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-2 text-center text-xs text-slate-600 dark:text-slate-400 pt-0.5">
+        <div className="flex flex-col items-center p-1 sm:p-1.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-800/60 min-w-0">
+          <Droplets size={13} className="text-sky-500 mb-0.5 flex-shrink-0" />
+          <span className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate w-full">Humidity</span>
+          <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200 truncate w-full">{main.humidity}%</span>
         </div>
-        <div className="flex flex-col items-center p-1.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-800/60">
-          <Wind size={14} className="text-teal-500 mb-0.5" />
-          <span className="text-[10px] text-slate-400 font-medium">Wind</span>
-          <span className="font-bold text-slate-800 dark:text-slate-200">{wind.speed} m/s</span>
+        <div className="flex flex-col items-center p-1 sm:p-1.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-800/60 min-w-0">
+          <Wind size={13} className="text-teal-500 mb-0.5 flex-shrink-0" />
+          <span className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate w-full">Wind</span>
+          <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200 truncate w-full">{wind.speed} m/s</span>
         </div>
-        <div className="flex flex-col items-center p-1.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-800/60">
-          <Gauge size={14} className="text-indigo-500 mb-0.5" />
-          <span className="text-[10px] text-slate-400 font-medium">Pressure</span>
-          <span className="font-bold text-slate-800 dark:text-slate-200">{main.pressure} hPa</span>
+        <div className="flex flex-col items-center p-1 sm:p-1.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-800/60 min-w-0">
+          <Gauge size={13} className="text-indigo-500 mb-0.5 flex-shrink-0" />
+          <span className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate w-full">Pressure</span>
+          <span className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-slate-200 truncate w-full">{main.pressure} hPa</span>
         </div>
       </div>
     </div>

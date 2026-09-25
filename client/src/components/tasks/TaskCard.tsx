@@ -74,7 +74,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
     <Card
       id={`task-${task.id}`}
       variant="default"
-      className={`relative overflow-hidden p-5 sm:p-6 border-l-4 ${
+      className={`relative overflow-hidden p-4 sm:p-5 lg:p-6 border-l-4 ${
         task.completed
           ? 'border-l-slate-300 dark:border-l-slate-700 opacity-75'
           : isDueSoon
@@ -82,16 +82,16 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
           : priorityStyle.border
       } hover:shadow-lg transition-all duration-200 group`}
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-2.5 sm:gap-4">
         {/* Checkbox and Task Content */}
-        <div className="flex items-start gap-3.5 flex-1 min-w-0">
+        <div className="flex items-start gap-2.5 sm:gap-3.5 flex-1 min-w-0">
           <button
             onClick={handleToggle}
             aria-label={task.completed ? 'Mark task incomplete' : 'Mark task completed'}
-            className="mt-0.5 text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-full active:scale-90 cursor-pointer"
+            className="mt-0.5 text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-full active:scale-90 cursor-pointer flex-shrink-0"
           >
             <CheckCircle
-              size={23}
+              size={22}
               className={`transition-colors ${
                 task.completed
                   ? 'text-emerald-500 fill-emerald-100 dark:fill-emerald-950'
@@ -102,7 +102,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
 
           <div className="flex-1 min-w-0">
             <h3
-              className={`text-base sm:text-lg font-bold tracking-tight break-words transition-colors ${
+              className={`text-sm sm:text-base lg:text-lg font-bold tracking-tight break-words transition-colors ${
                 task.completed
                   ? 'line-through text-slate-400 dark:text-slate-500'
                   : 'text-slate-900 dark:text-slate-100'
@@ -113,7 +113,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
 
             {task.description && (
               <p
-                className={`mt-1.5 text-sm break-words leading-relaxed ${
+                className={`mt-1 sm:mt-1.5 text-xs sm:text-sm break-words leading-relaxed ${
                   task.completed
                     ? 'line-through text-slate-400 dark:text-slate-600'
                     : 'text-slate-600 dark:text-slate-300'
@@ -124,30 +124,30 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
             )}
 
             {/* Subject and tags */}
-            <div className="mt-3 flex flex-wrap items-center gap-2">
+            <div className="mt-2.5 sm:mt-3 flex flex-wrap items-center gap-1.5 sm:gap-2">
               <span
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-xs font-semibold border"
+                className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-lg text-[11px] sm:text-xs font-semibold border max-w-full truncate"
                 style={{
                   backgroundColor: `${categoryColor}15`,
                   borderColor: `${categoryColor}35`,
                   color: categoryColor,
                 }}
               >
-                <BookOpen size={12} />
-                <span>{categoryName}</span>
+                <BookOpen size={11} className="flex-shrink-0" />
+                <span className="truncate">{categoryName}</span>
               </span>
 
               <span
-                className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-xs font-semibold border ${priorityStyle.badge}`}
+                className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-lg text-[11px] sm:text-xs font-semibold border ${priorityStyle.badge}`}
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${priorityStyle.dot}`} />
+                <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${priorityStyle.dot}`} />
                 <span className="capitalize">{task.priority} Priority</span>
               </span>
 
               {/* 24-Hour Urgent Alert Badge */}
               {isDueSoon && !task.completed && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700/60 animate-pulse">
-                  <BellRing size={12} className="text-amber-600 dark:text-amber-400" />
+                <span className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 rounded-lg text-[11px] sm:text-xs font-bold bg-amber-500/15 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700/60 animate-pulse">
+                  <BellRing size={11} className="text-amber-600 dark:text-amber-400 flex-shrink-0" />
                   <span>{remainingTime}</span>
                 </span>
               )}
@@ -156,11 +156,11 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-1 flex-shrink-0">
+        <div className="flex items-center gap-0.5 sm:gap-1 flex-shrink-0">
           <button
             onClick={() => onEdit(task)}
             aria-label={`Edit ${task.title}`}
-            className="p-2 rounded-xl text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 dark:hover:text-sky-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 dark:hover:text-sky-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 cursor-pointer"
           >
             <Edit2 size={15} />
           </button>
@@ -169,7 +169,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
             onClick={handleDelete}
             disabled={isDeleting}
             aria-label={`Delete ${task.title}`}
-            className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-800 dark:hover:text-rose-400 transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-800 dark:hover:text-rose-400 transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 cursor-pointer"
           >
             <Trash2 size={15} />
           </button>
@@ -177,7 +177,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
       </div>
 
       {/* Footer Deadline */}
-      <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/90 flex items-center justify-between text-xs">
+      <div className="mt-3.5 sm:mt-4 pt-2.5 sm:pt-3 border-t border-slate-100 dark:border-slate-800/90 flex flex-wrap items-center justify-between gap-2 text-xs">
         <div
           className={`flex items-center gap-1.5 font-semibold ${
             isOverdue
@@ -188,20 +188,20 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit }) => {
           }`}
         >
           {isOverdue ? (
-            <AlertTriangle size={14} />
+            <AlertTriangle size={13} className="flex-shrink-0" />
           ) : isDueSoon ? (
-            <Clock size={14} className="animate-pulse" />
+            <Clock size={13} className="animate-pulse flex-shrink-0" />
           ) : (
-            <Clock size={14} />
+            <Clock size={13} className="flex-shrink-0" />
           )}
-          <span>
+          <span className="break-words">
             Due: {formatDeadline(task.deadline)}
             {isDueSoon && ` (${remainingTime})`}
           </span>
         </div>
 
         {task.completed && (
-          <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Completed</span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-xs ml-auto">Completed</span>
         )}
       </div>
     </Card>

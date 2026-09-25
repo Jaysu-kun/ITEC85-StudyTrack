@@ -78,7 +78,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
   };
 
   return (
-    <Card variant="glass" className="w-full max-w-md p-6 sm:p-8 mx-auto shadow-2xl">
+    <Card variant="glass" className="w-full max-w-md p-5 sm:p-8 mx-auto shadow-2xl">
       <motion.div
         key={type}
         initial={{ opacity: 0, y: 8 }}
@@ -86,10 +86,10 @@ export const AuthForm: React.FC<AuthFormProps> = ({
         transition={{ duration: 0.25 }}
         className="w-full"
       >
-        <h2 className="text-2xl sm:text-3xl font-black text-center text-slate-900 dark:text-white mb-2 tracking-tight">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-center text-slate-900 dark:text-white mb-1.5 sm:mb-2 tracking-tight">
           {type === 'login' ? 'Welcome Back!' : 'Create an Account'}
         </h2>
-        <p className="text-sm text-center text-slate-600 dark:text-slate-400 mb-6">
+        <p className="text-xs sm:text-sm text-center text-slate-600 dark:text-slate-400 mb-5 sm:mb-6">
           {type === 'login'
             ? 'Log in to manage your tasks and schedule.'
             : 'Sign up to organize your tasks and stay on top of deadlines.'}
@@ -98,14 +98,14 @@ export const AuthForm: React.FC<AuthFormProps> = ({
         {authError && (
           <div
             role="alert"
-            className="mb-5 p-3.5 rounded-xl border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/70 text-rose-700 dark:text-rose-300 text-sm flex items-start gap-2.5"
+            className="mb-4 sm:mb-5 p-3 sm:p-3.5 rounded-xl border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/70 text-rose-700 dark:text-rose-300 text-sm flex items-start gap-2.5"
           >
             <div className="w-2 h-2 rounded-full bg-rose-500 mt-1.5 flex-shrink-0" />
-            <p className="flex-1 font-medium text-xs sm:text-sm">{authError}</p>
+            <p className="flex-1 font-medium text-xs sm:text-sm break-words">{authError}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="space-y-3.5 sm:space-y-4">
           {type === 'signup' && (
             <Input
               name="name"
@@ -154,7 +154,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? 'Hide password' : 'Show password'}
               aria-pressed={showPassword}
-              className="absolute right-3.5 top-9 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 transition-colors"
+              className="absolute right-3.5 top-9 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 transition-colors cursor-pointer"
             >
               {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
@@ -166,20 +166,20 @@ export const AuthForm: React.FC<AuthFormProps> = ({
             size="lg"
             fullWidth
             isLoading={isLoading}
-            className="mt-6"
+            className="mt-5 sm:mt-6"
             icon={<ArrowRight size={18} />}
           >
             {type === 'login' ? 'Sign In' : 'Get Started'}
           </Button>
         </form>
 
-        <div className="mt-6 text-center border-t border-slate-100 dark:border-slate-800/80 pt-4">
-          <p className="text-sm text-slate-600 dark:text-slate-400">
+        <div className="mt-5 sm:mt-6 text-center border-t border-slate-100 dark:border-slate-800/80 pt-3.5 sm:pt-4">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             {type === 'login' ? "Don't have an account?" : 'Already have an account?'}
             <button
               type="button"
               onClick={onToggleForm}
-              className="ml-2 font-bold text-sky-600 dark:text-sky-400 hover:underline focus:outline-none"
+              className="ml-1.5 sm:ml-2 font-bold text-sky-600 dark:text-sky-400 hover:underline focus:outline-none cursor-pointer"
             >
               {type === 'login' ? 'Sign Up' : 'Log In'}
             </button>

@@ -47,22 +47,22 @@ export const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center pt-16 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="relative z-10 w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    <div className="relative min-h-screen flex items-center justify-center pt-20 sm:pt-24 pb-12 px-3.5 sm:px-6 lg:px-8 overflow-hidden">
+      <div className="relative z-10 w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         {/* Left Side: Illustration */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center md:items-start text-center md:text-left p-4 sm:p-8"
+          className="flex flex-col items-center lg:items-start text-center lg:text-left p-2 sm:p-6"
         >
-          <div className="mb-6 flex justify-center md:justify-start">
+          <div className="mb-4 sm:mb-6 flex justify-center lg:justify-start">
             <HeroMascot />
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight break-words">
             Stay Ahead in Your Studies
           </h1>
-          <p className="mt-3 text-base text-slate-600 dark:text-slate-300 max-w-md leading-relaxed font-normal">
+          <p className="mt-2.5 sm:mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-md leading-relaxed font-normal">
             Join students using IskoTasks to organize tasks, track deadlines, and stay on schedule.
           </p>
         </motion.div>

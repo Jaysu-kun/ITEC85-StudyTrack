@@ -190,6 +190,28 @@ html.dark {
   background: rgba(148, 163, 184, 0.6);
 }
 
+/* Hide scrollbar utility while maintaining scrollability */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Prevent image and iframe distortion/overflow */
+img, video, iframe {
+  max-width: 100%;
+}
+
+/* Form input touch enhancement on mobile */
+input, select, textarea, button {
+  touch-action: manipulation;
+}
+
 /* Accessibility: Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,

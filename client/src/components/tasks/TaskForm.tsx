@@ -191,7 +191,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
             <legend id={priorityId} className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
               Priority
             </legend>
-            <div className="flex gap-2" role="group" aria-labelledby={priorityId}>
+            <div className="flex gap-1.5 sm:gap-2" role="group" aria-labelledby={priorityId}>
               {(['low', 'medium', 'high'] as const).map((p) => {
                 const isSelected = priority === p;
                 return (
@@ -200,7 +200,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                     type="button"
                     onClick={() => setPriority(p)}
                     aria-pressed={isSelected}
-                    className={`flex-1 py-2 px-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 ${isSelected
+                    className={`flex-1 py-2 px-1.5 sm:px-3 rounded-xl border text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 cursor-pointer text-center ${isSelected
                         ? priorityColors[p].active
                         : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
                       }`}
@@ -230,7 +230,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
               }}
               aria-invalid={Boolean(errors.deadline)}
               aria-describedby={`${deadlineId}-help${errors.deadline ? ` ${deadlineId}-error` : ''}`}
-              className={`w-full px-4 py-2 border rounded-xl text-sm transition-all focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white ${errors.deadline
+              className={`w-full px-3.5 sm:px-4 py-2 border rounded-xl text-xs sm:text-sm transition-all focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white ${errors.deadline
                   ? 'border-rose-500 dark:border-rose-500 focus:ring-rose-500/25'
                   : 'border-slate-200 dark:border-slate-700/80'
                 }`}
@@ -255,7 +255,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         </label>
 
         {!showNewSubject ? (
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <select
               id={subjectId}
               required
@@ -266,7 +266,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
               }}
               aria-invalid={Boolean(errors.subject)}
               aria-describedby={errors.subject ? `${subjectId}-error` : undefined}
-              className={`flex-1 px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 ${errors.subject
+              className={`flex-1 min-w-0 px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 cursor-pointer ${errors.subject
                   ? 'border-rose-500 dark:border-rose-500 focus:ring-rose-500/25'
                   : 'border-slate-200 dark:border-slate-700/80'
                 }`}
@@ -287,13 +287,14 @@ export const TaskForm: React.FC<TaskFormProps> = ({
               variant="outline"
               size="md"
               type="button"
+              className="w-full sm:w-auto flex-shrink-0"
               onClick={() => setShowNewSubject(true)}
             >
               Add subject
             </Button>
           </div>
         ) : (
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <input
               id={newSubjectId}
               type="text"
@@ -306,7 +307,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
               }}
               aria-invalid={Boolean(errors.newSubject)}
               aria-describedby={errors.newSubject ? `${newSubjectId}-error` : undefined}
-              className={`flex-1 px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 ${errors.newSubject
+              className={`flex-1 min-w-0 px-4 py-2.5 rounded-xl border bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-500 ${errors.newSubject
                   ? 'border-rose-500 dark:border-rose-500 focus:ring-rose-500/25'
                   : 'border-slate-200 dark:border-slate-700/80'
                 }`}
@@ -316,6 +317,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
                 variant="secondary"
                 size="md"
                 type="button"
+                className="w-full sm:w-auto flex-shrink-0"
                 onClick={() => setShowNewSubject(false)}
               >
                 Cancel
@@ -332,10 +334,11 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       </div>
 
       {/* Action Buttons */}
-      <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+      <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5 sm:gap-3 pt-4 border-t border-slate-100 dark:border-slate-800/80">
         <Button
           variant="outline"
           size="md"
+          className="w-full sm:w-auto"
           onClick={onCancel}
           disabled={isSubmitting}
         >
@@ -345,6 +348,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
           variant="gradient"
           size="md"
           type="submit"
+          className="w-full sm:w-auto"
           isLoading={isSubmitting}
         >
           {initialTask ? 'Update Task' : 'Create Task'}
